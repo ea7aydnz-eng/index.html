@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Biz</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family: "Poppins", system-ui, -apple-system, Arial;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  color:#fff;
+  background:#0b1220;
+  overflow-x:hidden;
+}
+
+/* YAĞMUR */
+.rain{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+}
+
+.drop{
+  position:absolute;
+  width:1px;
+  height:60px;
+  background:linear-gradient(#ffffff55,#ffffff);
+  animation: fall 1.2s linear infinite;
+  opacity:.7;
+}
+
+@keyframes fall{
+  to{
+    transform:translateY(120vh);
+    opacity:0.3;
+  }
+}
+
+/* KART */
+.container{
+  position:relative;
+  z-index:2;
+  max-width:800px;
+  margin:0 auto;
+  padding:30px 20px 80px;
+}
+
+h1{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.buttons{
+  display:grid;
+  gap:14px;
+}
+
+button{
+  padding:14px 16px;
+  border-radius:16px;
+  border:none;
+  background:#f72585;
+  color:#fff;
+  font-size:16px;
+  cursor:pointer;
+  transition:.2s;
+  box-shadow:0 10px 25px #f7258535;
+}
+
+button:hover{
+  transform:translateY(-2px) scale(1.01);
+}
+
+/* SONUÇ ALANI */
+.output{
+  margin-top:20px;
+  padding:14px;
+  background:#111a33;
+  border-radius:18px;
+  min-height:80px;
+  line-height:1.5;
+}
+
+/* RASTGELE YAZILAR */
+.love-item{
+  position:absolute;
+  font-size:20px;
+  animation: pulse 1.4s ease-in-out forwards;
+  color:#ffb3da;
+  text-shadow:0 0 10px #ff62b5;
+}
+
+@keyframes pulse{
+  0%{transform:scale(.6);opacity:0;}
+  40%{transform:scale(1.2);opacity:1;}
+  100%{transform:scale(.7);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- YAĞMUR -->
+<div class="rain" id="rain"></div>
+
+<div class="container">
+  <h1>💞 Bizim Hikayemiz 💞</h1>
+
+  <div class="buttons">
+    <button onclick="together()">⏳ Ne zamandır birlikteyiz?</button>
+    <button onclick="wish()">✨ Yeni yıl dileği</button>
+    <button onclick="distance()">📍 Mesafe</button>
+    <button onclick="loveThings()">💗 Sende sevdiğim şeyler</button>
+  </div>
+
+  <div class="output" id="out"></div>
+</div>
+
+<script>
+// ---- YAĞMUR OLUŞTUR ----
+const rain = document.getElementById("rain");
+for(let i=0;i<120;i++){
+  const d=document.createElement("div");
+  d.className="drop";
+  d.style.left=Math.random()*100+"%";
+  d.style.animationDelay=Math.random()+"s";
+  d.style.animationDuration=.8+Math.random()*1.2+"s";
+  rain.appendChild(d);
+}
+
+// ---- FONKSİYONLAR ----
+
+// 1) BİRLİKTE KAÇ GÜN
+function together(){
+  const days = 29; // istersen burayı değiştir
+  const msg =
+  `💖 ${days} gün oldu…<br>
+   Fakat bazı insanların bir günde hissettirdiğini<br>
+   bazı insanlar yıllar boyunca hissettiremez.<br><br>
+   Zamanın değeri, yanındaki kişi ile ölçülür.`;
+
+  out.innerHTML = msg + " ❤️❤️❤️";
+}
+
+// 2) YENİ YIL DİLEĞİ
+function wish(){
+  out.innerHTML =
+   "🎆 Dileğim: Her yeni yıla seninle girebilmek… ❤️";
+}
+
+// 3) MESAFE
+function distance(){
+  // yaklaşık (Konya merkez — Kocaeli merkez)
+  const km = 430;
+  out.innerHTML =
+    `📍 Aramızdaki mesafe: <b>${km} km</b><br>
+     Ama kalpler arasında mesafe yok. ❤️`;
+}
+
+// 4) SEVDİĞİM ŞEYLER — RASTGELE YER, KÜÇÜLÜP BÜYÜME
+const items = [
+ "cilven","utangaçlığın","güzelliğin","tatlılığın",
+ "otisttikliğin","yanakların","gözlerin","saçların",
+ "kıskançlığın","sevgin","saflığın","masumiyetin",
+ "kalbin","bakışın"
+];
+
+function loveThings(){
+  out.innerHTML = "💗 Sende sevdiğim şeyler:";
+
+  let i = 0;
+  const interval = setInterval(()=>{
+    if(i >= items.length){
+      clearInterval(interval);
+      return;
+    }
+    spawnWord(items[i]);
+    i++;
+  }, 450); // 4–5 saniye toplamda yayılıyor
+}
+
+function spawnWord(text){
+  const el = document.createElement("div");
+  el.className="love-item";
+  el.textContent=text;
+
+  el.style.left = (10 + Math.random()*80) + "%";
+  el.style.top  = (20 + Math.random()*60) + "%";
+
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),1500);
+}
+</script>
+
+</body>
+</html>
