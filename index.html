@@ -10,7 +10,7 @@
     margin:0;
     background:#0d0f1a;
     color:white;
-    font-family: "Poppins", sans-serif;
+    font-family:"Poppins", sans-serif;
     text-align:center;
     overflow:hidden;
   }
@@ -53,6 +53,24 @@
   @keyframes fall{
     to{ transform:translateY(120vh); }
   }
+
+  /* 🔥 SEVDİĞİM ŞEYLER — RASTGELE ÇIKAN YAZILAR */
+  .love-word{
+    position:fixed;
+    font-size:22px;
+    font-weight:600;
+    color:#ffb6d9;
+    animation:pop 3.5s ease-in-out forwards;
+    pointer-events:none;
+    text-shadow:0 0 10px rgba(255,255,255,.4);
+  }
+
+  @keyframes pop{
+    0%{ opacity:0; transform:scale(.6); }
+    15%{ opacity:1; transform:scale(1); }
+    80%{ opacity:1; }
+    100%{ opacity:0; transform:scale(.6); }
+  }
 </style>
 </head>
 
@@ -72,7 +90,7 @@
 <script>
 const out = document.getElementById("out");
 
-/* ⭐ TYPEWRITER (Yazı akma efekti) */
+/* ⭐ TYPEWRITER — sadece diğer yazılarda */
 function typeWriter(text, speed=35){
   out.innerHTML = "";
   let i = 0;
@@ -118,27 +136,38 @@ Ama kalpler arasında sıfır. ❤️`;
   typeWriter(text);
 }
 
-/* 💗 Sende sevdiğim şeyler */
+/* 💗 Sende sevdiğim şeyler — RASTGELE ÇIKSIN */
 const items = [
-"cilven","utangaçlığın","güzelliğin","tatlılığın",
-"otisttikliğin","yanakların","gözlerin","saçların",
-"kıskançlığın","sevgin","saflığın","masumiyetin",
-"kalbin","bakışın"
+ "cilven","utangaçlığın","güzelliğin","tatlılığın",
+ "otisttikliğin","yanakların","gözlerin","saçların",
+ "kıskançlığın","sevgin","saflığın","masumiyetin",
+ "kalbin","bakışın"
 ];
 
 function loves(){
-  let t = "💗 Sende en sevdiğim şeyler:\n\n";
+  out.innerHTML = "💗 Sende sevdiğim şeyler:";
+
   let i = 0;
 
-  function show(){
-    if(i < items.length){
-      t += "• " + items[i] + "\n";
-      typeWriter(t, 30);
-      i++;
-      setTimeout(show, 900);
-    }
+  function showOne(){
+    if(i >= items.length) i = 0;
+
+    const span = document.createElement("span");
+    span.className = "love-word";
+    span.textContent = "• " + items[i];
+
+    span.style.left = Math.random() * 75 + "vw";
+    span.style.top  = Math.random() * 70 + "vh";
+
+    document.body.appendChild(span);
+
+    setTimeout(()=> span.remove(), 3500);
+
+    i++;
+    setTimeout(showOne, 1200);
   }
-  show();
+
+  showOne();
 }
 
 /* 🌧️ YAĞMUR */
@@ -152,3 +181,4 @@ for(let i=0;i<120;i++){
 </script>
 </body>
 </html>
+
