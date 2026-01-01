@@ -3,201 +3,152 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Biz</title>
+<title>❤️ Bizim Dünyamız ❤️</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  font-family: "Poppins", system-ui, -apple-system, Arial;
-}
-
-body{
-  margin:0;
-  min-height:100vh;
-  color:#fff;
-  background:#0b1220;
-  overflow-x:hidden;
-}
-
-/* YAĞMUR */
-.rain{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:0;
-}
-
-.drop{
-  position:absolute;
-  width:1px;
-  height:60px;
-  background:linear-gradient(#ffffff55,#ffffff);
-  animation: fall 1.2s linear infinite;
-  opacity:.7;
-}
-
-@keyframes fall{
-  to{
-    transform:translateY(120vh);
-    opacity:0.3;
+  body{
+    margin:0;
+    background:#0d0f1a;
+    color:white;
+    font-family: "Poppins", sans-serif;
+    text-align:center;
+    overflow:hidden;
   }
-}
 
-/* KART */
-.container{
-  position:relative;
-  z-index:2;
-  max-width:800px;
-  margin:0 auto;
-  padding:30px 20px 80px;
-}
+  h1{ margin-top:25px; }
 
-h1{
-  text-align:center;
-  margin-bottom:20px;
-}
+  .buttons{
+    margin-top:20px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    justify-content:center;
+  }
 
-.buttons{
-  display:grid;
-  gap:14px;
-}
+  button{
+    padding:10px 16px;
+    border-radius:12px;
+    border:none;
+    cursor:pointer;
+    font-size:15px;
+  }
 
-button{
-  padding:14px 16px;
-  border-radius:16px;
-  border:none;
-  background:#f72585;
-  color:#fff;
-  font-size:16px;
-  cursor:pointer;
-  transition:.2s;
-  box-shadow:0 10px 25px #f7258535;
-}
+  #out{
+    margin-top:25px;
+    font-size:18px;
+    line-height:1.6;
+    min-height:160px;
+  }
 
-button:hover{
-  transform:translateY(-2px) scale(1.01);
-}
+  .rain{
+    position:fixed;
+    top:-10px;
+    width:2px;
+    height:15px;
+    background:#8fd3ff;
+    opacity:.7;
+    animation:fall linear infinite;
+  }
 
-/* SONUÇ ALANI */
-.output{
-  margin-top:20px;
-  padding:14px;
-  background:#111a33;
-  border-radius:18px;
-  min-height:80px;
-  line-height:1.5;
-}
-
-/* RASTGELE YAZILAR */
-.love-item{
-  position:absolute;
-  font-size:20px;
-  animation: pulse 1.4s ease-in-out forwards;
-  color:#ffb3da;
-  text-shadow:0 0 10px #ff62b5;
-}
-
-@keyframes pulse{
-  0%{transform:scale(.6);opacity:0;}
-  40%{transform:scale(1.2);opacity:1;}
-  100%{transform:scale(.7);opacity:0;}
-}
+  @keyframes fall{
+    to{ transform:translateY(120vh); }
+  }
 </style>
 </head>
 
 <body>
 
-<!-- YAĞMUR -->
-<div class="rain" id="rain"></div>
+<h1>💖 Yağmurum 💖</h1>
 
-<div class="container">
-  <h1>💞 Bizim Hikayemiz 💞</h1>
-
-  <div class="buttons">
-    <button onclick="together()">⏳ Ne zamandır birlikteyiz?</button>
-    <button onclick="wish()">✨ Yeni yıl dileği</button>
-    <button onclick="distance()">📍 Mesafe</button>
-    <button onclick="loveThings()">💗 Sende sevdiğim şeyler</button>
-  </div>
-
-  <div class="output" id="out"></div>
+<div class="buttons">
+  <button onclick="together()">⏳ Ne zamandır birlikteyiz?</button>
+  <button onclick="wish()">🎆 Yeni yıl dileği</button>
+  <button onclick="distance()">📍 Mesafe</button>
+  <button onclick="loves()">💗 Sende sevdiğim şeyler</button>
 </div>
 
+<div id="out"></div>
+
 <script>
-// ---- YAĞMUR OLUŞTUR ----
-const rain = document.getElementById("rain");
-for(let i=0;i<120;i++){
-  const d=document.createElement("div");
-  d.className="drop";
-  d.style.left=Math.random()*100+"%";
-  d.style.animationDelay=Math.random()+"s";
-  d.style.animationDuration=.8+Math.random()*1.2+"s";
-  rain.appendChild(d);
+const out = document.getElementById("out");
+
+/* ⭐ TYPEWRITER (Yazı akma efekti) */
+function typeWriter(text, speed=35){
+  out.innerHTML = "";
+  let i = 0;
+  function write(){
+    if(i < text.length){
+      out.innerHTML += text[i] === "\n" ? "<br>" : text[i];
+      i++;
+      setTimeout(write, speed);
+    }
+  }
+  write();
 }
 
-// ---- FONKSİYONLAR ----
-
-// 1) BİRLİKTE KAÇ GÜN
+/* ⏳ Birlikte geçen gün */
 function together(){
-  const days = 29; // istersen burayı değiştir
-  const msg =
-  `💖 ${days} gün oldu…<br>
-   Fakat bazı insanların bir günde hissettirdiğini<br>
-   bazı insanlar yıllar boyunca hissettiremez.<br><br>
-   Zamanın değeri, yanındaki kişi ile ölçülür.`;
+  const start = new Date("2025-12-03"); // TARİHİ BURAYA YAZ
+  const now   = new Date();
+  const diff  = Math.floor((now - start) / (1000*60*60*24));
 
-  out.innerHTML = msg + " ❤️❤️❤️";
+  const text =
+`💖 ${diff} gün oldu...
+Fakat bazı insanların bir günde hissettirdiğini bazı insanlar yıllar boyunca hissettiremez.
+Zamanın değeri yanındaki kişiyle ölçülür. ❤️`;
+
+  typeWriter(text);
 }
 
-// 2) YENİ YIL DİLEĞİ
+/* 🎆 Yeni yıl dileği */
 function wish(){
-  out.innerHTML =
-   "🎆 Dileğim: Her yeni yıla seninle girebilmek… ❤️";
+  const text =
+`🎇 Dileğim:
+Her yıla seninle girebilmek...
+Ne olursa olsun, yan yana. 💞`;
+  typeWriter(text);
 }
 
-// 3) MESAFE
+/* 📍 Mesafe */
 function distance(){
-  // yaklaşık (Konya merkez — Kocaeli merkez)
-  const km = 430;
-  out.innerHTML =
-    `📍 Aramızdaki mesafe: <b>${km} km</b><br>
-     Ama kalpler arasında mesafe yok. ❤️`;
+  const text =
+`📍 Konya Merkez — Kocaeli Merkez
+Aramızdaki mesafe: yaklaşık 430 km
+Ama kalpler arasında sıfır. ❤️`;
+  typeWriter(text);
 }
 
-// 4) SEVDİĞİM ŞEYLER — RASTGELE YER, KÜÇÜLÜP BÜYÜME
+/* 💗 Sende sevdiğim şeyler */
 const items = [
- "cilven","utangaçlığın","güzelliğin","tatlılığın",
- "otisttikliğin","yanakların","gözlerin","saçların",
- "kıskançlığın","sevgin","saflığın","masumiyetin",
- "kalbin","bakışın"
+"cilven","utangaçlığın","güzelliğin","tatlılığın",
+"otisttikliğin","yanakların","gözlerin","saçların",
+"kıskançlığın","sevgin","saflığın","masumiyetin",
+"kalbin","bakışın"
 ];
 
-function loveThings(){
-  out.innerHTML = "💗 Sende sevdiğim şeyler:";
-
+function loves(){
+  let t = "💗 Sende en sevdiğim şeyler:\n\n";
   let i = 0;
-  const interval = setInterval(()=>{
-    if(i >= items.length){
-      clearInterval(interval);
-      return;
+
+  function show(){
+    if(i < items.length){
+      t += "• " + items[i] + "\n";
+      typeWriter(t, 30);
+      i++;
+      setTimeout(show, 900);
     }
-    spawnWord(items[i]);
-    i++;
-  }, 450); // 4–5 saniye toplamda yayılıyor
+  }
+  show();
 }
 
-function spawnWord(text){
-  const el = document.createElement("div");
-  el.className="love-item";
-  el.textContent=text;
-
-  el.style.left = (10 + Math.random()*80) + "%";
-  el.style.top  = (20 + Math.random()*60) + "%";
-
-  document.body.appendChild(el);
-  setTimeout(()=>el.remove(),1500);
+/* 🌧️ YAĞMUR */
+for(let i=0;i<120;i++){
+  const r = document.createElement("div");
+  r.className = "rain";
+  r.style.left = Math.random()*100 + "vw";
+  r.style.animationDuration = (0.6 + Math.random()*0.9) + "s";
+  document.body.appendChild(r);
 }
 </script>
-
 </body>
 </html>
